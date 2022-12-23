@@ -19,7 +19,6 @@ public class InitKnife : MonoBehaviour
     bool checkKnife = true;
     int indexKnifeConfigElement = 0;
     bool clicking = false;
-    float TimeLongClick = 0f;
     float gravityScale = -1;
     float minGravity;
     float maxGravity;

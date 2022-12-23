@@ -12,7 +12,7 @@ public class CanvasKnifes : MonoBehaviour
     KnifeManager knifeManager;
     LogManager logManager;
     StateManager stateManager;
-    int lenghtKnife = 0;
+    // int lenghtKnife = 0;
     void Awake()
     {
         stateManager = FindObjectOfType<StateManager>();
