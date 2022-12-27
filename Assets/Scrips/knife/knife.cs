@@ -9,12 +9,13 @@ public class knife : MonoBehaviour
     [SerializeField] ParticleSystem effectCollisionLog;
     [SerializeField] ParticleSystem effectCollisionApple;
     [SerializeField] ParticleSystem effectCollisionKnife;
+    [SerializeField] ParticleSystem effectTriggerLog;
     [SerializeField] int point = 10;
     [SerializeField] AudioClip SFXShooting;
     [SerializeField] AudioClip SFXPowerUp;
     [SerializeField] AudioClip SFXCollisionKnife;
-    [SerializeField] AudioClip SFXCollisionApple;
     [SerializeField] AudioClip SFXCollisionLog;
+    [SerializeField] AudioClip SFXCollisionLogMax;
     private ParticleSystem.MainModule pMain;
     AudioSource audioSFX;
     InitKnife initKnife;
@@ -48,6 +49,7 @@ public class knife : MonoBehaviour
                 this.gameObject.transform.SetParent(other.gameObject.transform);
                 this.gameObject.GetComponent<Collider2D>().offset = new Vector2(this.gameObject.GetComponent<Collider2D>().offset.x, -0.05f);
                 canvasKnifes.SetDestroyKnifePanle();
+                initKnife.StateKnife();
                 audioSFX.clip = SFXCollisionLog;
                 audioSFX.Play();
                 if (initKnife.GetIndexKnife() > 0)
@@ -57,6 +59,9 @@ public class knife : MonoBehaviour
             }
             else if (other.gameObject.tag == "Knife")
             {
+                Rb2D.velocity = new Vector2(15f, 20f);
+                Rb2D.bodyType = RigidbodyType2D.Dynamic;
+                Rb2D.gravityScale = 1f;
                 stateManager.SetLoseLife();
                 effectKnife.Stop();
                 effectCollisionKnife.Play();
@@ -87,11 +92,18 @@ public class knife : MonoBehaviour
             {
                 effectCollisionApple.Play();
                 GameObject gameObjectSkillApple = Instantiate(SkillApple, other.transform.position, Quaternion.identity);
+                gameObjectSkillApple.GetComponent<AudioSource>().Play();
                 stateManager.SetScore(point);
                 Destroy(other.gameObject);
                 StartCoroutine(delayDestroySkillApple(gameObjectSkillApple));
-                audioSFX.clip = SFXCollisionApple;
                 audioSFX.Play();
+            }
+            else if (other.tag == "Log")
+            {
+                audioSFX.clip = SFXCollisionLogMax;
+                audioSFX.Play();
+                effectTriggerLog.Play();
+
             }
         }
     }

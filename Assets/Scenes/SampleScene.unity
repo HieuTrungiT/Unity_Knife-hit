@@ -307,7 +307,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 0fbab297a40ed3f43915fd4d53375195, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.467
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1489,7 +1489,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 947d5ea83e518324d90687ee1ea447d5, type: 2}
   - {fileID: 11400000, guid: 6c00a8588ea728c42b026a25faf7011a, type: 2}
   - {fileID: 11400000, guid: 7151db7a3b5f277428df92b4dd6bc0c4, type: 2}
-  minGravityKnife: -0.3
+  minGravityKnife: -1
   maxGravityKnife: -100
 --- !u!1 &1489280361
 GameObject:

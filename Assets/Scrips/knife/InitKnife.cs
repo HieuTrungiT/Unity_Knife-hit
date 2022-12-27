@@ -6,9 +6,9 @@ public class InitKnife : MonoBehaviour
 {
     [SerializeField] Transform KnifeTemp;
     [SerializeField] Slider mSlider;
-    [Range(1,300)]
+    [Range(1, 300)]
     [SerializeField] int frameRate;
-
+    [SerializeField] GameObject Knife;
     KnifeManager knifeManager;
     LogManager logManager;
     StateManager stateManager;
@@ -19,6 +19,7 @@ public class InitKnife : MonoBehaviour
     bool checkKnife = true;
     int indexKnifeConfigElement = 0;
     bool clicking = false;
+    bool stateKnife = true;
     float gravityScale = -1;
     float minGravity;
     float maxGravity;
@@ -34,6 +35,7 @@ public class InitKnife : MonoBehaviour
     void Start()
     {
         InitKnifes(indexKnifeConfigElement);
+
         minGravity = knifeManager.GetMinGravityKnife();
         maxGravity = knifeManager.GetMaxGravityKnife();
         mSlider.minValue = Mathf.Abs(minGravity);
@@ -43,14 +45,15 @@ public class InitKnife : MonoBehaviour
 
 
     void Update()
-    {   Application.targetFrameRate = frameRate;
+    {
+        Application.targetFrameRate = frameRate;
         indexKnifeConfigElement = logManager.GetIndexLog();
 
         if (stateManager.GetLife() > 0)
         {
 
             OnTapOrClick();
-            if (clicking)
+            if (clicking && stateKnife)
             {
                 if (!checkReloadGravity)
                 {
@@ -80,9 +83,14 @@ public class InitKnife : MonoBehaviour
                 if (gameObjectKnife != null)
                 {
                     gameObjectKnife.GetComponent<knife>().SetPowerEffect(gravityScale / 2);
+                    if (stateKnife)
+                    {
+                        gameObjectKnife.transform.position = new Vector2(0f, -3.53398f + gravityScale / 100);
+                    }
                 }
 
             }
+
             if (indexKnife == 0 && checkKnife)
             {
                 checkKnife = false;
@@ -92,7 +100,8 @@ public class InitKnife : MonoBehaviour
     }
     IEnumerator delayInstanKnife()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
+        // indexKnife = 1;
         InitKnifes(logManager.GetIndexLog());
     }
     public int GetIndexKnife()
@@ -101,6 +110,8 @@ public class InitKnife : MonoBehaviour
     }
     void OnTapOrClick()
     {
+
+
         if (Input.GetMouseButtonDown(0))
         {
             gravityScale = minGravity;
@@ -108,41 +119,46 @@ public class InitKnife : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            clicking = false;
+
             float numberGrvt = gravityScale / 1000;
-            gameObjectKnife.GetComponent<BoxCollider2D>().offset = new Vector2(0f, (numberGrvt * 3));
-            gameObjectKnife.GetComponent<knife>().PlaySFXShoot();
-            gameObjectKnife.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
-            gravityScale = minGravity;
+
+            if (gameObjectKnife != null)
+            {
+                gameObjectKnife.GetComponent<BoxCollider2D>().offset = new Vector2(0f, (numberGrvt * 3));
+                gameObjectKnife.GetComponent<knife>().PlaySFXShoot();
+                gameObjectKnife.GetComponent<Rigidbody2D>().gravityScale = gravityScale;
+                gravityScale = minGravity;
+                clicking = false;
+                stateKnife = false;
+            }
+
         }
 
     }
     public void InitKnifes(int index)
     {
+
         KnifeConfig knifeConfig;
-        Debug.Log(indexKnife);
-        Debug.Log(knifeManager.GetCountKnifeConfig());
-
         knifeConfig = knifeManager.GetKnifeConfigElement(index);
-
 
         if (indexKnife < knifeConfig.GetCountKnife())
         {
+            Debug.Log("sinh sản");
             GameObject knife = knifeConfig.GetKnifeElement(indexKnife);
             gameObjectKnife = Instantiate(knife, new Vector3(0f, -3.5f, 0f), Quaternion.identity);
             gameObjectKnife.GetComponent<knife>().StartEffect();
             gameObjectKnife.transform.SetParent(GameObject.Find("Knifes").transform);
             indexKnife += 1;
+
         }
-        else
+        else if (stateManager.GetLife() > 0 && indexKnife == knifeConfig.GetCountKnife())
         {
-            if (stateManager.GetLife() > 0 && indexKnife == knifeConfig.GetCountKnife())
-            {
-                StartCoroutine(delayInitLog());
-                indexKnife = 0;
-                checkKnife = true;
-            }
+            Debug.Log("sinh sản vòng mới");
+            StartCoroutine(delayInitLog());
         }
+
+
+
     }
 
     public void DestroyKnifeTemp()
@@ -152,7 +168,6 @@ public class InitKnife : MonoBehaviour
 
     IEnumerator delayDestroyKnife()
     {
-
         yield return new WaitForSeconds(3f);
         for (int i = 0; i < KnifeTemp.childCount; i++)
         {
@@ -161,10 +176,18 @@ public class InitKnife : MonoBehaviour
     }
     IEnumerator delayInitLog()
     {
-        yield return new WaitForSeconds(0.1f);
-        logManager.SetIndexLog();
-        initLogMotor.InitLog(logManager.GetIndexLog());
+
+
+
+
+        yield return new WaitForSeconds(0.6f);
+        checkKnife = true;
+        indexKnife = 0;
     }
 
+    public void StateKnife()
+    {
+        stateKnife = true;
+    }
 
 }

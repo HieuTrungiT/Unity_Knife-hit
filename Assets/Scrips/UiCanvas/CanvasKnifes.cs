@@ -39,7 +39,6 @@ public class CanvasKnifes : MonoBehaviour
     {
 
         int lenghtKnife = knifeManager.GetKnifeConfigElement(logManager.GetIndexLog()).GetCountKnife();
-        Debug.Log(lenghtKnife);
         for (int i = 0; i < lenghtKnife; i++)
         {
             var myObject = Instantiate(PanelKnife, transform.position, Quaternion.Euler(0f, 0f, -130f));

@@ -18,6 +18,7 @@ public class LogRotation : MonoBehaviour
     KnifeManager knifeManager;
     LogManager logManager;
     InitKnife initKnife;
+    InitLogMotor initLogMotor;
     float TimeCountDown;
     int indexRd;
     void Awake()
@@ -25,6 +26,7 @@ public class LogRotation : MonoBehaviour
         knifeManager = FindObjectOfType<KnifeManager>();
         logManager = FindObjectOfType<LogManager>();
         initKnife = FindObjectOfType<InitKnife>();
+        initLogMotor = FindObjectOfType<InitLogMotor>();
     }
     void Start()
     {
@@ -47,7 +49,7 @@ public class LogRotation : MonoBehaviour
         }
     }
     // hiệu ứng tung dao khi chuyển màn
-    void CheckSkillKnife()
+    public void CheckSkillKnife()
     {
         if (LogGroup.childCount == knifeManager.GetKnifeConfigElement(logManager.GetIndexLog()).GetCountKnife())
         {
@@ -67,6 +69,9 @@ public class LogRotation : MonoBehaviour
                 initKnife.DestroyKnifeTemp();
                 // StartCoroutine(delayDestroyKnife());
             }
+
+            logManager.SetIndexLog();
+            initLogMotor.InitLog(logManager.GetIndexLog());
         }
     }
 

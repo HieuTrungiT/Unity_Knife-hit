@@ -8,10 +8,14 @@ public class InitLogMotor : MonoBehaviour
     LogRotation logRotation;
     LogManager logManager;
     GameObject gameObjectLog;
+    InitKnife initKnife;
+    KnifeManager knifeManager;
     CanvasKnifes canvasKnifes;
     int indexLog;
     void Awake()
     {
+        knifeManager = FindObjectOfType<KnifeManager>();
+        initKnife = FindObjectOfType<InitKnife>();
         logManager = FindObjectOfType<LogManager>();
         indexLog = logManager.GetIndexLog();
         logRotation = FindObjectOfType<LogRotation>();
@@ -30,12 +34,16 @@ public class InitLogMotor : MonoBehaviour
     {
         if (gameObjectLog != null)
         {
-            Destroy(gameObjectLog);
+            KnifeConfig knifeConfig;
+            knifeConfig = knifeManager.GetKnifeConfigElement(logManager.GetIndexLog());
+
             GameObject gameObjSkillLog = Instantiate(SkillLog, gameObjectLog.transform.position, Quaternion.identity);
             StartCoroutine(destroySkillLog(gameObjSkillLog));
         }
         StartCoroutine(InstanLog(index));
+
     }
+
     IEnumerator InstanLog(int index)
     {
         yield return new WaitForSeconds(0.5f);
@@ -55,7 +63,12 @@ public class InitLogMotor : MonoBehaviour
     }
     IEnumerator destroySkillLog(GameObject gameObjectSkillLog)
     {
-        yield return new WaitForSeconds(0.5f);
+
+
+
+        yield return new WaitForSeconds(0.3f);
+        Destroy(gameObjectLog);
+        yield return new WaitForSeconds(2f);
         Destroy(gameObjectSkillLog);
     }
 }
