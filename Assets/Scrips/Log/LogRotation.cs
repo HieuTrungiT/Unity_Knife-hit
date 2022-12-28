@@ -34,7 +34,7 @@ public class LogRotation : MonoBehaviour
     }
     void Update()
     {
-        CheckSkillKnife();
+        // CheckSkillKnife();
 
         TimeCountDown += Time.deltaTime;
         if (TimeCountDown <= rotaionPattern[indexRd].Duration)
@@ -51,28 +51,27 @@ public class LogRotation : MonoBehaviour
     // hiệu ứng tung dao khi chuyển màn
     public void CheckSkillKnife()
     {
-        if (LogGroup.childCount == knifeManager.GetKnifeConfigElement(logManager.GetIndexLog()).GetCountKnife())
+        // if (LogGroup.childCount == knifeManager.GetKnifeConfigElement(logManager.GetIndexLog()).GetCountKnife())
+        // {
+        initKnife.SetStateKnife(false);
+        for (int i = 0; i < LogGroup.childCount; i++)
         {
-            for (int i = 0; i < LogGroup.childCount; i++)
-            {
-                Rigidbody2D rb2D;
-                BoxCollider2D BoxClid2D;
-                GameObject gameObjectKnife = LogGroup.GetChild(i).gameObject;
-                gameObjectKnife.tag = "Untagged";
-                gameObjectKnife.transform.SetParent(GameObject.Find("KnifeTemp").transform);
-                rb2D = gameObjectKnife.GetComponent<Rigidbody2D>();
-                BoxClid2D = gameObjectKnife.GetComponent<BoxCollider2D>();
-                rb2D.velocity = new Vector2(Random.Range(-5, 5f), Random.Range(1f, 10f));
-                rb2D.bodyType = RigidbodyType2D.Dynamic;
-                rb2D.gravityScale = 1;
-                BoxClid2D.isTrigger = true;
-                initKnife.DestroyKnifeTemp();
-                // StartCoroutine(delayDestroyKnife());
-            }
-
-            logManager.SetIndexLog();
-            initLogMotor.InitLog(logManager.GetIndexLog());
+            Rigidbody2D rb2D;
+            BoxCollider2D BoxClid2D;
+            GameObject gameObjectKnife = LogGroup.GetChild(i).gameObject;
+            gameObjectKnife.tag = "Untagged";
+            gameObjectKnife.transform.SetParent(GameObject.Find("KnifeTemp").transform);
+            rb2D = gameObjectKnife.GetComponent<Rigidbody2D>();
+            BoxClid2D = gameObjectKnife.GetComponent<BoxCollider2D>();
+            rb2D.velocity = new Vector2(Random.Range(-5, 5f), Random.Range(1f, 10f));
+            rb2D.bodyType = RigidbodyType2D.Dynamic;
+            rb2D.gravityScale = 1.5f;
+            BoxClid2D.isTrigger = true;
         }
+        initKnife.DestroyKnifeTemp();
+
+
+        // }
     }
 
 

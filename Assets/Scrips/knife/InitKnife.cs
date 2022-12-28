@@ -8,7 +8,7 @@ public class InitKnife : MonoBehaviour
     [SerializeField] Slider mSlider;
     [Range(1, 300)]
     [SerializeField] int frameRate;
-    [SerializeField] GameObject Knife;
+
     KnifeManager knifeManager;
     LogManager logManager;
     StateManager stateManager;
@@ -91,7 +91,7 @@ public class InitKnife : MonoBehaviour
 
             }
 
-            if (indexKnife == 0 && checkKnife)
+            if (indexKnife == 0 && checkKnife && stateKnife)
             {
                 checkKnife = false;
                 StartCoroutine(delayInstanKnife());
@@ -112,10 +112,14 @@ public class InitKnife : MonoBehaviour
     {
 
 
+
         if (Input.GetMouseButtonDown(0))
         {
-            gravityScale = minGravity;
-            clicking = true;
+            if (stateKnife)
+            {
+                gravityScale = minGravity;
+                clicking = true;
+            }
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -131,6 +135,8 @@ public class InitKnife : MonoBehaviour
                 clicking = false;
                 stateKnife = false;
             }
+
+
 
         }
 
@@ -149,7 +155,6 @@ public class InitKnife : MonoBehaviour
             gameObjectKnife.GetComponent<knife>().StartEffect();
             gameObjectKnife.transform.SetParent(GameObject.Find("Knifes").transform);
             indexKnife += 1;
-
         }
         else if (stateManager.GetLife() > 0 && indexKnife == knifeConfig.GetCountKnife())
         {
@@ -164,30 +169,36 @@ public class InitKnife : MonoBehaviour
     public void DestroyKnifeTemp()
     {
         StartCoroutine(delayDestroyKnife());
+        checkKnife = true;
     }
 
     IEnumerator delayDestroyKnife()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.7f);
+
         for (int i = 0; i < KnifeTemp.childCount; i++)
         {
             Destroy(KnifeTemp.GetChild(i).gameObject);
         }
+        yield return new WaitForSeconds(0.1f);
+        stateKnife = true;
+
+
     }
     IEnumerator delayInitLog()
     {
 
 
-
-
-        yield return new WaitForSeconds(0.6f);
-        checkKnife = true;
+        logManager.SetIndexLog();
+        initLogMotor.InitLog(logManager.GetIndexLog());
+        yield return new WaitForSeconds(0.3f);
         indexKnife = 0;
+
     }
 
-    public void StateKnife()
+    public void SetStateKnife(bool state)
     {
-        stateKnife = true;
+        stateKnife = state;
     }
 
 }

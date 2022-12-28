@@ -9840,8 +9840,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.56
-      minScalar: 0.1
+      scalar: 1.34
+      minScalar: 0.46
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9947,7 +9947,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.6831588, b: 0, a: 1}
+      maxColor: {r: 0.6509434, g: 0.55932915, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -14817,7 +14817,7 @@ MonoBehaviour:
   effectCollisionApple: {fileID: 6354927738738970793}
   effectCollisionKnife: {fileID: 4954592629639699680}
   effectTriggerLog: {fileID: 8141067899089751971}
-  point: 10
+  point: 1
   SFXShooting: {fileID: 8300000, guid: 5516f3d9a2b94c54092b26b8a61cb1b3, type: 3}
   SFXPowerUp: {fileID: 8300000, guid: 28840dbe22c5847409bb462631016713, type: 3}
   SFXCollisionKnife: {fileID: 8300000, guid: 5c0e127c69269f84982ddf32f953fb6e, type: 3}
@@ -14866,9 +14866,9 @@ Rigidbody2D:
   m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!82 &7228360107770515876
 AudioSource:
@@ -14979,7 +14979,7 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.06}
+  m_Offset: {x: 0, y: -0.11}
   m_Size: {x: 0.05, y: 0.22}
   m_Direction: 0
 --- !u!1 &5336781033675334838
@@ -19877,7 +19877,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &2303817813804351231
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1118,6 +1118,7 @@ MonoBehaviour:
   KnifeTemp: {fileID: 2007209925}
   mSlider: {fileID: 1967987507}
   frameRate: 60
+  Knife: {fileID: 0}
 --- !u!1 &876436460
 GameObject:
   m_ObjectHideFlags: 0
@@ -1489,7 +1490,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 947d5ea83e518324d90687ee1ea447d5, type: 2}
   - {fileID: 11400000, guid: 6c00a8588ea728c42b026a25faf7011a, type: 2}
   - {fileID: 11400000, guid: 7151db7a3b5f277428df92b4dd6bc0c4, type: 2}
-  minGravityKnife: -1
+  minGravityKnife: -5
   maxGravityKnife: -100
 --- !u!1 &1489280361
 GameObject:

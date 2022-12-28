@@ -49,7 +49,7 @@ public class knife : MonoBehaviour
                 this.gameObject.transform.SetParent(other.gameObject.transform);
                 this.gameObject.GetComponent<Collider2D>().offset = new Vector2(this.gameObject.GetComponent<Collider2D>().offset.x, -0.05f);
                 canvasKnifes.SetDestroyKnifePanle();
-                initKnife.StateKnife();
+                initKnife.SetStateKnife(true);
                 audioSFX.clip = SFXCollisionLog;
                 audioSFX.Play();
                 if (initKnife.GetIndexKnife() > 0)
@@ -85,16 +85,18 @@ public class knife : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
         // Trigger Apple
         if (!isOneCollision && stateManager.GetLife() > 0)
         {
             if (other.tag == "Apple_point")
             {
+
                 effectCollisionApple.Play();
                 GameObject gameObjectSkillApple = Instantiate(SkillApple, other.transform.position, Quaternion.identity);
+                Destroy(other.gameObject);
                 gameObjectSkillApple.GetComponent<AudioSource>().Play();
                 stateManager.SetScore(point);
-                Destroy(other.gameObject);
                 StartCoroutine(delayDestroySkillApple(gameObjectSkillApple));
                 audioSFX.Play();
             }

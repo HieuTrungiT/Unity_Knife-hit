@@ -32,6 +32,7 @@ public class InitLogMotor : MonoBehaviour
     }
     public void InitLog(int index)
     {
+
         if (gameObjectLog != null)
         {
             KnifeConfig knifeConfig;
@@ -52,6 +53,7 @@ public class InitLogMotor : MonoBehaviour
             gameObjectLog = Instantiate(logManager.GetElementLog(index), new Vector3(0f, 2.5f, 0f), Quaternion.identity);
             gameObjectLog.transform.SetParent(GameObject.Find("LogMotor").transform);
             canvasKnifes.RenderKnifePanle();
+
         }
         else
         {
@@ -60,14 +62,15 @@ public class InitLogMotor : MonoBehaviour
             gameObjectLog.transform.SetParent(GameObject.Find("LogMotor").transform);
             canvasKnifes.RenderKnifePanle();
         }
+
     }
     IEnumerator destroySkillLog(GameObject gameObjectSkillLog)
     {
-
-
-
-        yield return new WaitForSeconds(0.3f);
+        gameObjectLog.GetComponent<LogRotation>().CheckSkillKnife();
         Destroy(gameObjectLog);
+        // yield return new WaitForSeconds(0.5f);
+
+
         yield return new WaitForSeconds(2f);
         Destroy(gameObjectSkillLog);
     }
